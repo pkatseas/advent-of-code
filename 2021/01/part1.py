@@ -17,7 +17,7 @@ def main() -> None:
 
         previous_depth = depth
 
-    print(f"Total number of increasing_depths: {increasing_depths}")
+    print(f"Total number of increasing depths: {increasing_depths}")
 
 
 if __name__ == "__main__":
