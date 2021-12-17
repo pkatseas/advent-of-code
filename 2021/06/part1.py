@@ -38,7 +38,7 @@ def main() -> None:
                 new_fish.append(Lanternfish())
         lanternfish.extend(new_fish)
 
-    print(f"After {NUMBER_OF_DAYS}, we have {len(lanternfish)} lanternfish")
+    print(f"After {NUMBER_OF_DAYS} days, we have {len(lanternfish)} lanternfish")
 
 
 if __name__ == "__main__":
