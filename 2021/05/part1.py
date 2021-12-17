@@ -41,7 +41,7 @@ def get_line_points(line: Line) -> List[Tuple[int, int]]:
     if line.is_horizontal():
         for index in range(min(line.x1, line.x2), max(line.x1, line.x2) + 1):
             points.append((index, line.y1))
-    if line.is_vertical():
+    elif line.is_vertical():
         for index in range(min(line.y1, line.y2), max(line.y1, line.y2) + 1):
             points.append((line.x1, index))
 
