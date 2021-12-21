@@ -1,10 +1,8 @@
-from dataclasses import dataclass
 from os import path
 
 NUMBER_OF_DAYS = 80
 
 
-@dataclass
 class Lanternfish:
     timer: int
 
