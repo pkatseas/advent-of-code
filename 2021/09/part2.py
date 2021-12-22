@@ -1,17 +1,23 @@
 from functools import reduce
 from os import path
-from typing import List, Optional, Tuple
+from typing import List, NamedTuple, Optional
+
+
+class Point(NamedTuple):
+    number: int
+    x: int
+    y: int
 
 
 def get_adjacent_point(
     rows: List[str], row_index: int, column_index: int
-) -> Optional[Tuple[int, int, int]]:
+) -> Optional[Point]:
     if row_index >= 0 and column_index >= 0:
         try:
-            return (
-                int(rows[row_index][column_index]),
-                row_index,
-                column_index,
+            return Point(
+                number=int(rows[row_index][column_index]),
+                x=row_index,
+                y=column_index,
             )
         except IndexError:
             pass
@@ -21,7 +27,7 @@ def get_adjacent_point(
 
 def get_adjacent_points(
     rows: List[str], row_index: int, column_index: int
-) -> List[Tuple[int, int, int]]:
+) -> List[Point]:
     adjacent_points = [
         get_adjacent_point(rows, row_index, column_index - 1),  # left
         get_adjacent_point(rows, row_index, column_index + 1),  # right
@@ -33,18 +39,18 @@ def get_adjacent_points(
     return [point for point in adjacent_points if point is not None]
 
 
-def get_basin_size(rows: List[str], low_point: Tuple[int, int, int]) -> int:
+def get_basin_size(rows: List[str], low_point: Point) -> int:
     basin = [low_point]  # the total basin collection
     potential_basin_points = [low_point]  # the 'queue' of points to consider
 
     while potential_basin_points:
         point = potential_basin_points.pop()
-        adjacent_points = get_adjacent_points(rows, point[1], point[2])
+        adjacent_points = get_adjacent_points(rows, point.x, point.y)
 
         new_points = [
             adjacent_point
             for adjacent_point in adjacent_points
-            if adjacent_point[0] < 9 and adjacent_point not in basin
+            if adjacent_point.number < 9 and adjacent_point not in basin
         ]
 
         if new_points:
@@ -65,8 +71,8 @@ def main() -> None:
             adjacent_points = get_adjacent_points(rows, row_index, column_index)
 
             point = int(column)
-            if all(point < adjacent_point[0] for adjacent_point in adjacent_points):
-                low_points.append((point, row_index, column_index))
+            if all(point < adjacent_point.number for adjacent_point in adjacent_points):
+                low_points.append(Point(number=point, x=row_index, y=column_index))
 
     basin_sizes = [get_basin_size(rows, low_point) for low_point in low_points]
 
